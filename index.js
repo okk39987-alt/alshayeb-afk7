@@ -3,7 +3,7 @@ const { joinVoiceChannel, entersState, VoiceConnectionStatus } = require('@disco
 const http = require('http');
 
 // ✅ Keep-Alive Server لمنع النوم على Render
-http.createServer((req, res) => res.end('ALshayeb Voice Bot is alive!')).listen(process.env.PORT || 3000);
+http.createServer((req, res) => res.end('ALshayeb AFK Bot is alive!')).listen(process.env.PORT || 3000);
 
 const client = new Client({
     intents: [
@@ -12,9 +12,9 @@ const client = new Client({
     ]
 });
 
-// 📌 حط هنا أيدي الروم الصوتي اللي تبيه يدخله
-const VOICE_CHANNEL_ID = "حط_أيدي_الروم_الصوتي_هنا";
-const GUILD_ID = "حط_أيدي_السيرفر_هنا";
+// 📌 حط أيدي الروم الصوتي وأيدي السيرفر حقك هنا (بدون أي رموز زيادة)
+const VOICE_CHANNEL_ID = "1508662405490544790";
+const GUILD_ID = "1402711345929130106";
 
 client.once('ready', async () => {
     console.log(`✅ البوت شغال باسم: ${client.user.tag}`);
@@ -26,18 +26,18 @@ client.once('ready', async () => {
         const channel = guild.channels.cache.get(VOICE_CHANNEL_ID);
         if (!channel) return console.log('❌ لم يتم العثور على الروم الصوتي!');
 
-        // 🔌 الاتصال بالروم الصوتي
+        // 🔌 الاتصال بالروم الصوتي (دفن بدون ميوت)
         const connection = joinVoiceChannel({
             channelId: channel.id,
             guildId: guild.id,
             adapterCreator: guild.voiceAdapterCreator,
-            selfDeaf: true, // 🔇 يدفن نفسه (يعمل Deafen لنفسه) تلقائياً أول ما يدخل
-            selfMute: true  // 🎤 يكتم نفسه (Mute) تلقائياً
+            selfDeaf: true,  // 🔇 يدفن نفسه (Deafen)
+            selfMute: false // 🎤 بدون كتم للميكروفون
         });
 
         // الانتظار حتى يتم الاتصال بنجاح
         await entersState(connection, VoiceConnectionStatus.Ready, 20 * 1000);
-        console.log(`🔊 دخل البوت روم الصوت (${channel.name}) ودفن نفسه بنجاح!`);
+        console.log(`🔊 دخل البوت روم الصوت (${channel.name}) ودفن نفسه بدون ميوت بنجاح!`);
 
     } catch (error) {
         console.error('❌ صار خطأ أثناء محاولة دخول الروم الصوتي:', error);
